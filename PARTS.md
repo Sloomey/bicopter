@@ -14,4 +14,4 @@
 
 * [Adafruit 16-channel PWM bonnet for Raspberry Pi ($9.95)](https://www.adafruit.com/product/3416)
 
-* [AT&T Option GI0461 3G cellular USB stick (No link currently)]
+* AT&T Option GI0461 3G cellular USB stick (No link currently)
