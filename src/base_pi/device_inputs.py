@@ -73,11 +73,12 @@ def device_input(controller_used = False, keyboard_used = False):
     else:
         print("Please Choose an input device. This can be achieved by typing 'controller_used = True' or 'keyboard_used = True' in the function's parameters.")
         stop_program = True
-    
-while not stop_program:  
-    try:
-        device_input(keyboard_used = True)
-    except Exception as error:
-        print(error)
-        print('ERROR: EXITING')
-        break
+
+if __name__ == '__main__': # Only runs this code if you execute this file.
+    while not stop_program:  
+        try:
+            device_input(keyboard_used = True)
+        except Exception as error:
+            print(error)
+            print('ERROR: EXITING')
+            break
