@@ -8,10 +8,11 @@ import time # Implements functions using time in python
 stop_program = False # Stops the program and drone 
 
 keyboard_buttons = ['w', 'a', 's', 'd', 'f' , 'g', 'h', 'j', 'k', 'q'] # List of all buttons on keyboard being used
+mouse_buttons = ['left', 'middle', 'right'] # List of all mouse buttons being used
 
 """ Function used to see what input the user is doing and if the input
     isn't a listed input it won't do anything. """
-def device_input(controller_used = False, keyboard_used = False):
+def device_input(controller_used = False, keyboard_used = False, mouse_used = False):
     global stop_program
     if keyboard_used == True:
         for count, button in enumerate(keyboard_buttons):
@@ -67,7 +68,15 @@ def device_input(controller_used = False, keyboard_used = False):
                         stop_program = True
                 else:
                     pass
+            
+    elif controller_used == True:
+        print('Controller input coming soon.')
+        stop_program = True
+    else:
+        print("Please Choose an input device. This can be achieved by typing 'controller_used = True' or 'keyboard_used = True' in the function's parameters.")
+        stop_program = True
 
+    if mouse_used == True:
         previous_mouse = mouse.get_position()
         time.sleep(0.005)
         current_mouse = mouse.get_position() 
@@ -87,18 +96,30 @@ def device_input(controller_used = False, keyboard_used = False):
             print('Mouse is moving up...')
             time.sleep(0.5)
             """ Later function will be added later. """
-            
-    elif controller_used == True:
-        print('Controller input coming soon.')
-        stop_program = True
-    else:
-        print("Please Choose an input device. This can be achieved by typing 'controller_used = True' or 'keyboard_used = True' in the function's parameters.")
-        stop_program = True
+        for count, button in enumerate(mouse_buttons):
+            for case in switch(count):
+                if case(0): # Left mouse button
+                    if mouse.is_pressed(button=button):
+                        print('Pressing {} mouse button...'.format(button))
+                        time.sleep(0.05)
+                        """ Later function will be added later. """
+                elif case(1): # Middle mouse button (wheel)
+                    if mouse.is_pressed(button=button):
+                        print('Pressing {} mouse button...'.format(button))
+                        time.sleep(0.05)
+                        """ Later function will be added later. """
+                elif case(2): # Right mouse button 
+                    if mouse.is_pressed(button=button):
+                        print('Pressing {} mouse button...'.format(button))
+                        time.sleep(0.05)
+                        """ Later function will be added later. """
+                else:
+                    pass
 
 if __name__ == '__main__': # Only runs this code if you execute this file.
     while not stop_program:  
         try:
-            device_input(keyboard_used = True)
+            device_input(keyboard_used = True, mouse_used = True)
         except Exception as error:
             print(error)
             print('ERROR: EXITING')
