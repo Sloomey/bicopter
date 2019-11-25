@@ -3,6 +3,7 @@
 from switchcase import switch # Implements switch cases in python
 import keyboard # Implements keyboard input in python
 import mouse # Implements mouse input in python
+import inputs # Implements controller input for python
 import time # Implements functions using time in python
 
 stop_program = False # Stops the program and drone 
