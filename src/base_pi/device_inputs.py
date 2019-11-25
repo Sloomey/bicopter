@@ -1,16 +1,16 @@
-""" This file is used to gather all the inputs from the user's device. """
+""" This file is used to gather all the inputs from the user's device. REMINDER: REMOVE ALL 'time.sleep's WHEN ADDING FUCTIONALITY."""
 
 from switchcase import switch # Implements switch cases in python
 import keyboard # Implements keyboard input in python
-import inputs # Implements mouse input in python
+import mouse # Implements mouse input in python
 import time # Implements functions using time in python
 
 stop_program = False # Stops the program and drone 
 
 keyboard_buttons = ['w', 'a', 's', 'd', 'f' , 'g', 'h', 'j', 'k', 'q'] # List of all buttons on keyboard being used
 
-""" Function used to see what button the user is pressing and if the button
-    isn't a listed button it won't do anything. """
+""" Function used to see what input the user is doing and if the input
+    isn't a listed input it won't do anything. """
 def device_input(controller_used = False, keyboard_used = False):
     global stop_program
     if keyboard_used == True:
@@ -67,6 +67,27 @@ def device_input(controller_used = False, keyboard_used = False):
                         stop_program = True
                 else:
                     pass
+
+        previous_mouse = mouse.get_position()
+        time.sleep(0.005)
+        current_mouse = mouse.get_position() 
+        if current_mouse[0] > previous_mouse[0]: # Checks if the current mouse position X is greater than the previous mouse position X (going right)
+            print('Mouse is moving right...')
+            time.sleep(0.5)
+            """ Later function will be added later. """
+        elif current_mouse[0] < previous_mouse[0]: # Checks if the current mouse position X is less than the previous mouse position X (going left)
+            print('Mouse is moving left...')
+            time.sleep(0.5)
+            """ Later function will be added later. """
+        if current_mouse[1] > previous_mouse[1]: # Checks if the current mouse position Y is greater than the previous mouse position Y (going down)
+            print('Mouse is moving down...')
+            time.sleep(0.5)
+            """ Later function will be added later. """
+        elif current_mouse[1] < previous_mouse[1]: # Checks if the current mouse position Y is less than the previous mouse position Y (going up)
+            print('Mouse is moving up...')
+            time.sleep(0.5)
+            """ Later function will be added later. """
+            
     elif controller_used == True:
         print('Controller input coming soon.')
         stop_program = True
