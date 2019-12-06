@@ -1,3 +1,5 @@
+""" This file is used to receive input wirelessly from the base pi."""
+
 import socket # Used for sending data wirelessly
 import json # Used to decode python objects
 import pi_control # Used to control drone
