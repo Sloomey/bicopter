@@ -2,45 +2,26 @@
     MAKE SURE YOUR RASPBERRY PI IS NAMED "raspberrypi" OR IT WON'T WORK."""
 
 import socket # Used for sending data wirelessly
-import device_inputs as di # Used for input
+import json # Used to encode python objects
+from inputs import get_gamepad # Used for controller input
 
-keyboard = False
-mouse = False
-controller = False
+def controller_input(): # Used for getting controller inputs
+        events = get_gamepad()
+        for event in events:
+            return (event.code, event.state)
 
+if __name__ == "__main__":
+    s = socket.socket() # Makes a socket on IPV4 using TCP
 
-while True: #Loop gets the input used
-    input_used = input('Keyboard or controller (WARNING: KEYBOARD IS UNSTABLE CURRENTLY): ').lower()
-    if input_used == 'keyboard':
-        keyboard = True
-        while True:
-            input_used = input('Mouse? (yes/no): ')
-            if input_used == 'yes':
-                mouse = True
-                break
-            elif input_used == 'no':
-                mouse = False
-                break
-            else:
-                print('Please type "yes" or "no"')
-                continue
-        break
-    elif input_used == 'controller':
-        controller = True
-        break
-    else:
-        print('Please type "keyboard" or "controller"')
-        continue
-s = socket.socket() # Makes a socket on IPV4 using TCP
+    hostname = 'raspberrypi' # Server IP/Hostname 
+    PORT = 31415 # Server Port
 
-hostname = 'raspberrypi' # Server IP/Hostname 
-PORT = 8080 # Server Port
+    s.connect((hostname, PORT)) #Connects to server
 
-s.connect((hostname, PORT)) #Connects to server
-
-while True:
-    input_message = di.device_input(controller, keyboard, mouse)
-    if input_message == None:
-        pass
-    else:
-        s.send(input_message.encode("utf-8")) #Encodes and sends message
+    while True:
+        controller_inputs = controller_input()
+        controller_pressed = {controller_inputs[0]: controller_inputs[1]}
+        msg = json.dumps(controller_pressed)
+        print(msg)
+        s.send(msg.encode('utf-8')) # Sends message
+    
