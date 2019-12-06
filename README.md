@@ -1,4 +1,4 @@
-# Bicopter
+# Tricopter
 A project meant to control a drone using a computer and a raspberry pi using inputs from the user's computer. 
 
 # Explanation
