@@ -1,9 +1,10 @@
 import socket # Used for sending data wirelessly
-#import RPi.GPIO as GPIO, USED LATER
+import json # Used to decode python objects
+import pi_control # Used to control drone
 import time # Used for time
 
 listensocket = socket.socket() # Makes a socket on IPV4 using TCP
-PORT = 8080 # Port to host server on
+PORT = 31415 # Port to host server on
 maxConnections = 5 # Max connections to host at a time
 IP = socket.gethostname() # IP address of local machine
 
@@ -16,5 +17,12 @@ clientsocket, address = listensocket.accept() # Accepts the incomming connection
 print(f'Connection from {address} has been established!')
 
 while True:
-    message = clientsocket.recv(1024).decode("utf-8") #Gets the incomming message
-    print(message)
+    try:
+        controller_inputs = clientsocket.recv(1024).decode('utf-8') #Gets the incomming message
+        msg = json.loads(controller_inputs)
+        if pi_control.use_input(msg) == None:
+            pass
+        else:
+            print(pi_control.use_input(msg))
+    except json.decoder.JSONDecodeError:
+        pass
