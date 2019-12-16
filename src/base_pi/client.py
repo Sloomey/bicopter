@@ -21,7 +21,12 @@ if __name__ == "__main__":
     while True:
         controller_inputs = controller_input()
         controller_pressed = {controller_inputs[0]: controller_inputs[1]}
-        msg = json.dumps(controller_pressed)
-        print(msg)
-        s.send(msg.encode('utf-8')) # Sends message
+        msg = json.dumps(controller_pressed) # Encodes message
+        print(msg) # Used for debugging
+        try:
+                s.send(msg.encode('utf-8')) # Sends message  
+        except ConnectionResetError:
+                print('Drone has disconnected')
+                break
+                
     
